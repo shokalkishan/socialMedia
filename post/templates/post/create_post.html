@@ -1,0 +1,13 @@
+
+<!-- home.html -->
+
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <h1>Create Post</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}  <!-- Include CSRF token for security -->
+        {{ form.as_p }}  <!-- Render form fields as <p> elements -->
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,56 @@
+
+<!-- home.html -->
+
+{% extends 'home/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<ul>
+    <h2>Posts</h2>
+    <form action="{% url 'post:create_post' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Create Post</button>
+    </form>
+    {% for post in posts %}
+    <li>{{post.user.username}} : {{ post.caption }}</li>
+    <img src="{{ post.post.url }}" alt="Post Image" style="width: 400px; height: auto;">
+    <h5>Likes : {{post.likes}}
+        <form action="{% url 'post:like_post' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <button type="submit">Like</button>
+        </form>
+    </h5>
+        {% if post.user == user %}
+            <form action="{% url 'post:delete_post' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <button type="submit">Delete</button>
+            </form>
+        {% endif %}
+
+    {% endfor %}
+</ul>
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+        
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ posts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">next</a>
+            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        
+    </span>
+</div>
+
+
+{% endblock %}

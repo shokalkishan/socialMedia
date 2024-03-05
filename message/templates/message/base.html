@@ -1,0 +1,43 @@
+<!-- base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <!-- Include any common CSS files or stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <!-- Your website header content -->
+        <h1>Welcome to My Website</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'msg:all_user' %}">ALL Users</a></li>
+                <li><a href="{% url 'home:home' %}">home</a></li>
+                
+                <li><a href="{% url 'msg:friends' %}">Friends</a></li>
+                <li><a href="{% url 'userProfile:logout' %}">Logout</a></li>
+                <!-- Add more navigation links as needed -->
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Content block that child templates will override -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Your website footer content -->
+        <p>&copy; 2024 My Website. All rights reserved.</p>
+    </footer>
+    
+    <!-- Include any common JavaScript files -->
+    <script src="script.js"></script>
+</body>
+</html>

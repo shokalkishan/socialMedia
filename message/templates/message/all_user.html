@@ -1,0 +1,74 @@
+{% extends 'home/base.html' %}
+
+{% block title %}All Users{% endblock %}
+
+{% block content %}
+    <h1>Users List</h1>
+    <div>
+        <ul>
+            {% for ele in users %}
+                <a href='' >
+                    <li>
+                        {{ ele.0.username }}
+                        {% if ele.1 == 'N' %}
+                            <form action="{% url 'msg:add_friend' friend=ele.0.username %}" method="post">
+                                <!-- Your form fields go here -->
+                                {% csrf_token %}
+
+                                <button type="submit">Add Friend</button>
+                            </form>
+                        {% endif %}
+                        {% if ele.1 == 'P' %}
+                            <!-- Content to display if condition1 is false and condition2 is true -->
+                            <form action="/submit-form/" method="post">
+                                <!-- Your form fields go here -->
+                                {% csrf_token %}
+
+                                <button type="submit" disabled>Pending</button>
+                            </form>
+                        {% endif %}
+                        {% if ele.1 == 'A' %}
+                            <!-- Content to display if condition1 is false and condition2 is true -->
+                            <form action="/submit-form/" method="post">
+                                <!-- Your form fields go here -->
+                                {% csrf_token %}
+
+                                <button type="submit" disabled>Friends</button>
+                            </form>
+                        {% endif %}
+                        {% if ele.1 == 'R' %}
+                            <!-- Content to display if both condition1 and condition2 are false -->
+                            <form action="/submit-form/" method="post">
+                                <!-- Your form fields go here -->
+                                {% csrf_token %}
+
+                                <button type="submit" disabled>Rejected</button>
+                            </form>
+                        {% endif %}
+                        
+                        
+                    </li>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if users.has_previous %}
+            
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ users.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ users.number }} of {{ users.paginator.num_pages }}.
+            </span>
+    
+            {% if users.has_next %}
+                <a href="?page={{ users.next_page_number }}">next</a>
+                <a href="?page={{ users.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+            
+        </span>
+    </div>
+{% endblock %}

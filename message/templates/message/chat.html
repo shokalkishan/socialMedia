@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+    <h1>Chat with {{ reciever.username }}</h1>
+
+    <div id="chat-messages" style="overflow-y: scroll; max-height: 300px;">
+        {% for message in messages %}
+            <div class="message">
+                <p><strong>{{ message.sender.username }}</strong>: {{ message.message }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <form id="message-form" method="post" action="{% url 'msg:save_chat' %}">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type your message here...">
+        <input type="hidden" name="reciever" value={{reciever.username}}>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        // Get the chat-messages container element
+        var chatMessages = document.getElementById('chat-messages');
+    
+        // Set the scroll position to the maximum height
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    </script>
+
+{% endblock %}

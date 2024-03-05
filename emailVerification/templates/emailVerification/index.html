@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>verification</h2>
+    <form method="post" action="{% url 'emailVerification:sendCode' %}">
+        {% csrf_token %}
+        {{user.email}}
+        <button type="submit">Send</button>
+    </form>
+    <h3>Or</h3>
+    <h3>Change Email And Verify</h3>
+    <form method="post" action="{% url 'emailVerification:sendCode' %}">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="example@gmail.com">
+        <button type="">Send</button>
+    </form>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>
